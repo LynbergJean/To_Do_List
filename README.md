@@ -88,4 +88,36 @@ To decouple the code for modularity, the program has been divided into the follo
 
 
 
+MakeShift File
+# Makefile for Task Management Program
+
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic
+
+OBJS = main.o add_task.o display_tasks.o complete_task.o sort_tasks.o filter_tasks.o track_subtask_progress.o check_overdue_tasks.o
+
+TARGET = task_manager
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $<
+
+clean:
+	rm -f $(OBJS) $(TARGET)
+
+
+
+Future Improvements
+
+Implement Sorting by Due Date: Add logic to compare and sort tasks based on their due dates.
+
+Improved Overdue Task Detection: Enhance the logic to parse and compare dates accurately.
+
+Persistent Storage: Store tasks in a file or database for saving and retrieving tasks across sessions.
+
+User Interface: Build a graphical interface or a web-based application for better usability.
 
