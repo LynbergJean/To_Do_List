@@ -1,0 +1,55 @@
+
+# Compiler settings
+CXX = g++
+CXXFLAGS = -Wall -Wextra -std=c++17 -I.
+
+# Build target
+TARGET = task_manager
+
+# Source files
+SOURCES = main.cpp task.cpp task_manager.cpp
+
+# Object files
+OBJECTS = $(SOURCES:.cpp=.o)
+
+# Header files
+HEADERS = task.h task_manager.h
+
+# Default target
+all: $(TARGET)
+
+# Linking the program
+$(TARGET): $(OBJECTS)
+	$(CXX) $(OBJECTS) -o $(TARGET)
+
+# Compilation rules
+main.o: main.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c main.cpp
+
+task.o: task.cpp task.h
+	$(CXX) $(CXXFLAGS) -c task.cpp
+
+task_manager.o: task_manager.cpp task_manager.h task.h
+	$(CXX) $(CXXFLAGS) -c task_manager.cpp
+
+# Clean build files
+clean:
+	rm -f $(OBJECTS) $(TARGET)
+
+# Rebuild everything
+rebuild: clean all
+
+# Run the program
+run: $(TARGET)
+	./$(TARGET)
+
+# Help target
+help:
+	@echo "Available targets:"
+	@echo "  all      - Build the task manager program (default)"
+	@echo "  clean    - Remove build files"
+	@echo "  rebuild  - Clean and rebuild everything"
+	@echo "  run      - Build and run the program"
+	@echo "  help     - Display this help message"
+
+.PHONY: all clean rebuild run help
